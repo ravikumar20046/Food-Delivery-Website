@@ -44,8 +44,34 @@ const PlaceOrder = () => {
     }
     let response =await axios.post(url+"/api/order/place",orderData,{headers:{token}})
     if(response.data.success){
-      const {session_url}=response.data;
-      window.location.replace(session_url);
+      //  data returned from backend razorpayOrder, orderId: newOrder._id
+
+      const razorpayOrder=response.data.razorpayOrder;
+      const options = {
+        key: "rzp_test_mgCcElFwvOiUyt",
+        amount: razorpayOrder.amount,
+        currency: "INR",
+        name: "Food Order",
+        description: "Test Transaction",
+        order_id: razorpayOrder.id,
+        handler: function () {
+          alert("Payment Successful");
+          navigate("/orders");
+        },
+        prefill: {
+          name: data.firstName + " " + data.lastName,
+          email: data.email,
+          contact: data.phone,
+        },
+      };
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+      razorpay.on("payment.failed", function () {
+        alert("Payment Failed");
+      });
+      navigate("/orders");
+      // console.log("razorpay",razorpay);
+
     }else{
       alert("Error");
     }
@@ -93,17 +119,17 @@ const PlaceOrder = () => {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>₹{getTotalCartAmount()}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${getTotalCartAmount()===0?0:2}</p>
+              <p>₹{getTotalCartAmount()===0?0:2}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${getTotalCartAmount()===0?0:getTotalCartAmount()+2}</b>
+              <b>₹{getTotalCartAmount()===0?0:getTotalCartAmount()+2}</b>
             </div>
           </div>
           <button type="submit">PROCEED TO PAYMENT</button>
