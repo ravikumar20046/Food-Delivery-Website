@@ -192,9 +192,10 @@ const placeOrder = async (req, res) => {
             receipt: `order_${newOrder._id}`,
             payment_capture: 1
         });
-        console.log(razorpayOrder);
+        console.log("razorPayorder" , razorpayOrder);
+        console.log('rahul');
 
-        res.json({ success: true, orderId: razorpayOrder.id });
+        res.json({ success: true, razorpayOrder, orderId: newOrder._id });
     } catch (err) {
         console.log(err);
         res.json({ success: false, message: "Error" });
