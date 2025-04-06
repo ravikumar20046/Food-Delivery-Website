@@ -56,7 +56,7 @@ const PlaceOrder = () => {
         order_id: razorpayOrder.id,
         handler: function () {
           alert("Payment Successful");
-          navigate("/orders");
+          navigate("/myorders");
         },
         prefill: {
           name: data.firstName + " " + data.lastName,
@@ -69,7 +69,7 @@ const PlaceOrder = () => {
       razorpay.on("payment.failed", function () {
         alert("Payment Failed");
       });
-      navigate("/orders");
+      navigate("/myorders");
       // console.log("razorpay",razorpay);
 
     }else{
@@ -142,34 +142,3 @@ const PlaceOrder = () => {
 }
 
 export default PlaceOrder
-// const placeOrder = async (event) => {
-//   event.preventDefault();
-//   let orderItems = [];
-  
-//   food_list.forEach((item) => {
-//       if (cartItems[item._id] > 0) {
-//           let itemInfo = { ...item, quantity: cartItems[item._id] };
-//           orderItems.push(itemInfo);
-//       }
-//   });
-
-//   const orderData = {
-//       address: data,
-//       items: orderItems,
-//       amount: getTotalCartAmount() + 2,
-//   };
-
-//   try {
-//       let response = await axios.post(url + "/api/order/place", orderData, { headers: { token } });
-//       if (response.data.success) {
-//           alert("Order booked successfully!");
-//           navigate("/orders"); // Redirect to orders page
-//       } else {
-//           alert("Error booking order");
-//       }
-//   } catch (error) {
-//       console.error("Order error:", error);
-//       alert("Something went wrong!");
-//   }
-// };
-// export default placeOrder;

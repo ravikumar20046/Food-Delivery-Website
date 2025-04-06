@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 const Navbar = ({setShowLogin}) => {
   const [menu, setMenu]=useState("menu");
   const {getTotalCartAmount,token,setToken}=useContext(StoreContext);
-  const navgate=useNavigate();
+  const navigate=useNavigate();
 
   const logout=()=>{
     localStorage.removeItem("token");
@@ -35,8 +35,8 @@ const Navbar = ({setShowLogin}) => {
       <div className="navbar-profile">
         <img src={assets.profile_icon} alt="" />
         <ul className="nav-profile-dropdown">
-          {/* <li onClick={()=>navigate("/myorders")}><img src={assets.bag_icon} alt="" /><p>Orders</p></li> */}
-          <li><img src={assets.bag_icon} alt="" /><p>Orders</p></li>
+          <li onClick={()=>navigate("/myorders")}><img src={assets.bag_icon} alt="" /><p>Orders</p></li>
+          {/* <li><img src={assets.bag_icon} alt="" /><p>Orders</p></li> */}
           <hr />
           <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
           </ul>
